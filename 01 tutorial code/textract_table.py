@@ -4,6 +4,7 @@ import os
 import sys
 import webbrowser
 from io import BytesIO
+from pathlib import Path
 from pprint import pprint
 
 import boto3
@@ -110,10 +111,16 @@ def get_table_csv_results(file_name):
 
     # Get the text blocks
     blocks = response["Blocks"]
+    # print(blocks)
 
-    pprint(blocks)
-    with open("output.txt", "w") as fp:
-        pprint(blocks, stream=fp)
+    outname = Path("/home/lap/School/mchacks/mchacks-package/outputs_textract_table")
+    parts = Path(file_name).parts
+    outname = outname / parts[-2] / parts[-1]
+
+    outname.parent.mkdir(parents=True, exist_ok=True)
+    outname = str(outname.parent / outname.stem) + ".py"
+    with open(outname, "w") as fp:
+        print(blocks, file=fp)
 
     blocks_map = {}
     table_blocks = []
@@ -165,7 +172,6 @@ def main(file_name):
 
 
 if __name__ == "__main__":
-    from pathlib import Path
 
     dir = Path(__file__).parent
     file_name = str(dir / "85010-pg4.pdf")
