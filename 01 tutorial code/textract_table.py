@@ -110,7 +110,10 @@ def get_table_csv_results(file_name):
 
     # Get the text blocks
     blocks = response["Blocks"]
+
     pprint(blocks)
+    with open("output.txt", "w") as fp:
+        pprint(blocks, stream=fp)
 
     blocks_map = {}
     table_blocks = []
