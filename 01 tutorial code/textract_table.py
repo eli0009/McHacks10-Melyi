@@ -120,6 +120,7 @@ def get_table_csv_results(file_name):
     outname.parent.mkdir(parents=True, exist_ok=True)
     outname = str(outname.parent / outname.stem) + ".py"
     with open(outname, "w") as fp:
+        print("data=", file=fp, end="")
         print(blocks, file=fp)
 
     blocks_map = {}
@@ -174,5 +175,10 @@ def main(file_name):
 if __name__ == "__main__":
 
     dir = Path(__file__).parent
+
     file_name = str(dir / "85010-pg4.pdf")
-    main(file_name)
+
+    root = "/home/lap/School/mchacks/mchacks-package/02 PDF datasets"
+    for file in Path(root).rglob("*.pdf"):
+        if file.is_file():
+            main(file)
